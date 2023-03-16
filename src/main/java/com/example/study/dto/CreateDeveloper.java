@@ -1,5 +1,6 @@
 package com.example.study.dto;
 
+import com.example.study.entity.DeveloperEntity;
 import com.example.study.type.DeveloperLevel;
 import com.example.study.type.DeveloperSkillType;
 import jakarta.validation.constraints.Max;
@@ -47,5 +48,14 @@ public class CreateDeveloper {
         private DeveloperSkillType developerSkillType;
         private Integer experienceYears;
         private String memberId;
+
+        public static Response fromEntity(DeveloperEntity developerEntity){
+            return Response.builder()
+                    .developerLevel(developerEntity.getDeveloperLevel())
+                    .developerSkillType(developerEntity.getDeveloperSkillType())
+                    .experienceYears(developerEntity.getExperienceYears())
+                    .memberId(developerEntity.getMemberId())
+                    .build();
+        }
     }
 }

@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public enum DeveloperSkillType {
 
-    Back_end("백엔드 개발자"),
+    BACK_END("백엔드 개발자"),
     FRONT_END("프론트 개발자"),
     FULL_STACK("풀스택 개발자");
 

@@ -23,20 +23,22 @@ public class DMakerService {
     private final EntityManager em;
 
     @Transactional
-    public void createDeveloper(CreateDeveloper.Request request){
+    public CreateDeveloper.Response createDeveloper(CreateDeveloper.Request request){
         validateCreateDeveloperRequest(request);
 
 
         // 비지니스 로직
         DeveloperEntity developerEntity = DeveloperEntity.builder()
-                .developerLevel(DeveloperLevel.NEW)
-                .developerSkillType(DeveloperSkillType.Back_end)
-                .experienceYears(2)
-                .name("a")
-                .age(5)
+                .developerLevel(request.getDeveloperLevel())
+                .developerSkillType(request.getDeveloperSkillType())
+                .experienceYears(request.getExperienceYears())
+                .memberId(request.getMemberId())
+                .name(request.getName())
+                .age(request.getAge())
                 .build();
 
             developerRepository.save(developerEntity);
+            return CreateDeveloper.Response.fromEntity(developerEntity);
     }
 
     private void validateCreateDeveloperRequest(CreateDeveloper.Request request) {
