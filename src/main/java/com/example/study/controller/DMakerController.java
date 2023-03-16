@@ -2,15 +2,14 @@ package com.example.study.controller;
 
 
 import com.example.study.dto.CreateDeveloper;
+import com.example.study.dto.DeveloperDetailDto;
+import com.example.study.dto.DeveloperDto;
 import com.example.study.service.DMakerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.mapping.Collection;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,14 +23,23 @@ public class DMakerController {
 
     private final DMakerService dMakerService;
 
-    @GetMapping("/developers")
-    public List<String> getAllDevelopers() {
+    @GetMapping("/developers") // 전체 조회
+    public List<DeveloperDto> getAllDevelopers() {
         log.info("Get /developers HTTP/1.1");
 
-        return Arrays.asList("a", "b", "c");
+        return dMakerService.getAllDevelopers();
     }
 
-    @PostMapping("/create-developers")
+    @GetMapping("/developer/{memberId}") // 전체 조회
+    public DeveloperDetailDto getDevelopersDetail(
+            @PathVariable String memberId
+    ) {
+        log.info("Get /developers HTTP/1.1");
+
+        return dMakerService.getDeveloperDetail(memberId);
+    }
+
+    @PostMapping("/create-developers") // 사용자 생성
     public CreateDeveloper.Response createDevelopers(
        @Valid @RequestBody CreateDeveloper.Request request){
         {
