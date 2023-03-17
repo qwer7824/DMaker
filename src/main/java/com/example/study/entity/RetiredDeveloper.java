@@ -2,7 +2,6 @@ package com.example.study.entity;
 
 import com.example.study.type.DeveloperLevel;
 import com.example.study.type.DeveloperSkillType;
-import com.example.study.code.StatusCode;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class DeveloperEntity {
+public class RetiredDeveloper{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -33,10 +32,6 @@ public class DeveloperEntity {
     private String memberId;
     private String name;
     private Integer age;
-
-    @Enumerated(EnumType.STRING)
-    private StatusCode statusCode;
-
 
     @CreatedDate
     private LocalDateTime createdAt;

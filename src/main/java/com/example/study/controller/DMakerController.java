@@ -25,7 +25,7 @@ public class DMakerController {
     public List<DeveloperDto> getAllDevelopers() {
         log.info("Get /developers HTTP/1.1");
 
-        return dMakerService.getAllDevelopers();
+        return dMakerService.getAllEmployedDevelopers();
     }
 
     @GetMapping("/developer/{memberId}") // 상세 조회
@@ -55,6 +55,16 @@ public class DMakerController {
             log.info("Get /developers HTTP/1.1");
 
             return dMakerService.editDeveloper(memberId,request);
+        }
+    }
+
+    @DeleteMapping("developer/{memberId}") // 사용자 삭제
+    public DeveloperDetailDto DeleteDeveloper(
+            @PathVariable String memberId){
+        {
+            log.info("Get /developers HTTP/1.1");
+
+            return dMakerService.deleteDeveloper(memberId);
         }
     }
 
