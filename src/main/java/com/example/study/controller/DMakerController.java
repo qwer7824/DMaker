@@ -4,15 +4,13 @@ package com.example.study.controller;
 import com.example.study.dto.CreateDeveloper;
 import com.example.study.dto.DeveloperDetailDto;
 import com.example.study.dto.DeveloperDto;
+import com.example.study.dto.EditDeveloper;
 import com.example.study.service.DMakerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.mapping.Collection;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -30,7 +28,7 @@ public class DMakerController {
         return dMakerService.getAllDevelopers();
     }
 
-    @GetMapping("/developer/{memberId}") // 전체 조회
+    @GetMapping("/developer/{memberId}") // 상세 조회
     public DeveloperDetailDto getDevelopersDetail(
             @PathVariable String memberId
     ) {
@@ -48,4 +46,16 @@ public class DMakerController {
             return dMakerService.createDeveloper(request);
         }
     }
+
+    @PutMapping("developer/{memberId}") // 사용자 수정
+    public DeveloperDetailDto editDeveloper(
+            @PathVariable String memberId,
+            @Valid @RequestBody EditDeveloper.Request request){
+        {
+            log.info("Get /developers HTTP/1.1");
+
+            return dMakerService.editDeveloper(memberId,request);
+        }
+    }
+
 }
