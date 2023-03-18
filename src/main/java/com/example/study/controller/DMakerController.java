@@ -1,15 +1,16 @@
 package com.example.study.controller;
 
 
-import com.example.study.dto.CreateDeveloper;
-import com.example.study.dto.DeveloperDetailDto;
-import com.example.study.dto.DeveloperDto;
-import com.example.study.dto.EditDeveloper;
+import com.example.study.dto.*;
+import com.example.study.exception.DMakerException;
 import com.example.study.service.DMakerService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.List;
 
@@ -68,4 +69,14 @@ public class DMakerController {
         }
     }
 
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    @ExceptionHandler(DMakerException.class)
+    public DMakerErrorResponse handleException(DMakerException e, HttpServletRequest request){
+        log.error("errorCode: {}, url: {}, message : {}",
+                e.getDMakerErrorCode(), request.getRequestURI(), e.getDetailMessage());
+        return DMakerErrorResponse.builder()
+                .errorCode(e.getDMakerErrorCode())
+                .errorMessage(e.getDetailMessage())
+                .build();
+    }
 }

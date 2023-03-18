@@ -1,6 +1,7 @@
 package com.example.study.service;
 
 
+import ch.qos.logback.core.spi.ErrorCodes;
 import com.example.study.code.StatusCode;
 import com.example.study.dto.CreateDeveloper;
 import com.example.study.dto.DeveloperDetailDto;
@@ -8,6 +9,7 @@ import com.example.study.dto.DeveloperDto;
 import com.example.study.dto.EditDeveloper;
 import com.example.study.entity.DeveloperEntity;
 import com.example.study.entity.RetiredDeveloper;
+import com.example.study.exception.DMakerErrorCode;
 import com.example.study.exception.DMakerException;
 import com.example.study.repository.DeveloperRepository;
 import com.example.study.repository.RetiredDeveloperRepository;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.example.study.exception.DMakerErrorCode.*;
+import static com.example.study.type.DeveloperLevel.SENIOR;
 
 @Service
 @RequiredArgsConstructor
@@ -54,10 +57,12 @@ public class DMakerService {
         validateDeveloperLevel
                 (request.getDeveloperLevel(),
                         request.getExperienceYears());
-        developerRepository.findByMemberId(request.getMemberId())
-        .ifPresent((developerEntity -> {
-            throw new DMakerException(DUPLICATED_MEMBER_ID);
-        } ));
+
+            developerRepository.findByMemberId(request.getMemberId())
+                    .ifPresent((developerEntity -> {
+                        throw new DMakerException(DUPLICATED_MEMBER_ID);
+                    }));
+
     }
 
     public List<DeveloperDto> getAllEmployedDevelopers() {
@@ -99,7 +104,7 @@ public class DMakerService {
     }
 
     private void validateDeveloperLevel(DeveloperLevel developerLevel, Integer experienceYears) {
-        if (developerLevel == DeveloperLevel.SENIOR
+        if (developerLevel == SENIOR
                 && experienceYears < 10) {
             throw new DMakerException(LEVEL_EXPERIENCE_YEARS_NOT_MATCHED);
         }
