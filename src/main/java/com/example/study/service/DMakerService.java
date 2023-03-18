@@ -63,6 +63,7 @@ public class DMakerService {
                         throw new DMakerException(DUPLICATED_MEMBER_ID);
                     }));
 
+
     }
 
     public List<DeveloperDto> getAllEmployedDevelopers() {
@@ -137,4 +138,5 @@ public class DMakerService {
         retiredDeveloperRepository.save(retiredDeveloper);
         return DeveloperDetailDto.fromEntity(developerEntity);
     }
+
 }

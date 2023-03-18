@@ -1,5 +1,6 @@
 package com.example.study.dto;
 
+import com.example.study.code.StatusCode;
 import com.example.study.entity.DeveloperEntity;
 import com.example.study.type.DeveloperLevel;
 import com.example.study.type.DeveloperSkillType;
