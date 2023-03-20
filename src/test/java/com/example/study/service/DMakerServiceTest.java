@@ -11,6 +11,7 @@ import com.example.study.type.DeveloperLevel;
 import com.example.study.type.DeveloperSkillType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -26,6 +27,8 @@ import static com.example.study.type.DeveloperSkillType.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class DMakerServiceTest {
@@ -56,4 +59,31 @@ class DMakerServiceTest {
         assertEquals(12,developerDetail.getExperienceYears());
     }
 
+
+
+    @Test
+    void createdDeveloperTest_success(){
+    // Given
+        CreateDeveloper.Request request = CreateDeveloper.Request.builder()
+                .developerLevel(SENIOR)
+                .developerSkillType(FRONT_END)
+                .experienceYears(12)
+                .memberId("memberId")
+                .name("name")
+                .age(32)
+                .build();
+
+        given(developerRepository.findByMemberId(anyString()))
+                .willReturn(Optional.empty());
+        ArgumentCaptor<DeveloperDto> captor =
+                ArgumentCaptor.forClass(DeveloperDto.class);
+
+    // When
+        CreateDeveloper.Response developer = dMakerService.createDeveloper(request);
+        // Then
+
+        verify(developerRepository, times(1))
+                .save(captor.capture());// 특정 목이 몇번 호출됐다.
+
+    }
 }
